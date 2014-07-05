@@ -3,6 +3,9 @@ require 'set'
 
 class RendezvousHash
 
+  attr_reader :nodes
+  attr_reader :hash_function
+
   def initialize(nodes=nil, hash_function=method(:murmur3_32_str_hash))
     @nodes = nodes || []
     @hash_function = hash_function
