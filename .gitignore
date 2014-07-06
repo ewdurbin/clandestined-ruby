@@ -1,0 +1,7 @@
+/.bundle
+/bin
+/vendor
+
+/pkg
+/tmp
+/lib/murmur3_native.bundle
