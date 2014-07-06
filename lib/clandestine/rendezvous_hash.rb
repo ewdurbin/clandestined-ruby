@@ -1,8 +1,8 @@
 require 'murmur3_native'
 
-include Murmur3Native
-
 class RendezvousHash
+
+  include Murmur3Native
 
   attr_reader :nodes
   attr_reader :hash_function
