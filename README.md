@@ -22,7 +22,7 @@ Currently targetting for support:
 ## example usage
 
 ```ruby
-require 'clandestine'
+require 'clandestine/cluster'
 
 nodes = Hash[
     '1' => Hash['name' => 'node1.example.com', 'zone' => 'us-east-1a'],
@@ -56,7 +56,8 @@ invoke the `RendezvousHash` class directly, or use a `Cluster` with replicas
 set to 1
 
 ```ruby
-require 'clandestine'
+require 'clandestine/cluster'
+require 'clandestine/rendezvous_hash'
 
 nodes = Hash[
     '1' => Hash['name' => 'node1.example.com'],

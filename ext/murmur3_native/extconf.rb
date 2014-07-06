@@ -1,8 +1,22 @@
-require 'mkmf'
+can_compile_extensions = false
 
-dir_config("murmur3_native")
-have_library("c", "main")
+begin
+  require 'mkmf'
+  can_compile_extensions = true
+  dir_config("murmur3_native")
+  have_library("c", "main")
+  $defs << "-DRUBY_VERSION_CODE=#{RUBY_VERSION.gsub(/\D/, '')}"
+rescue Exception
+  $stderr.puts "Could not require 'mkmf'. Not fatal, the extensions are optional."
+end
 
-$defs << "-DRUBY_VERSION_CODE=#{RUBY_VERSION.gsub(/\D/, '')}"
 
-create_makefile("murmur3_native")
+if can_compile_extensions
+  create_makefile("murmur3_native")
+else
+  open("Makefile", "wb") do |mfile|
+    mfile.puts '.PHONY: install'
+    mfile.puts 'install:'
+    mfile.puts "\t" + '@echo "Extensions not installed, falling back to pure Ruby version."'
+  end
+end

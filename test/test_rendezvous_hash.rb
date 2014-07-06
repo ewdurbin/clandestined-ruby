@@ -2,8 +2,7 @@
 require 'test/unit'
 require 'set'
 
-require 'clandestine'
-require 'murmur3'
+require 'clandestine/rendezvous_hash'
 
 
 class RendezvousHashTestCase < Test::Unit::TestCase
