@@ -14,9 +14,9 @@ end
 if can_compile_extensions
   create_makefile("murmur3_native")
 else
-  mfile = open("Makefile", "wb")
-  mfile.puts '.PHONY: install'
-  mfile.puts 'install:'
-  mfile.puts "\t" + '@echo "Extensions not installed, falling back to pure Ruby version."'
-  mfile.close
+  open("Makefile", "wb") do |mfile|
+    mfile.puts '.PHONY: install'
+    mfile.puts 'install:'
+    mfile.puts "\t" + '@echo "Extensions not installed, falling back to pure Ruby version."'
+  end
 end
