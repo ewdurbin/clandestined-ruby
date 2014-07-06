@@ -1,7 +1,9 @@
 /.bundle
 /bin
 /vendor
+/.vendor
 
 /pkg
 /tmp
 /lib/murmur3_native.bundle
+/lib/murmur3_native.so
