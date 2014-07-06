@@ -97,84 +97,84 @@ end
 
 class RendezvousHashIntegrationTestCase < Test::Unit::TestCase
 
-    def test_grow
-        rendezvous = RendezvousHash.new()
+  def test_grow
+    rendezvous = RendezvousHash.new()
 
-        placements = Hash[]
-        for i in (0...10)
-            rendezvous.add_node(i.to_s)
-            placements[i.to_s] = []
-        end
-        for i in (0...1000)
-            node = rendezvous.find_node(i.to_s)
-            placements[node].push(i)
-        end
-
-        new_placements = Hash[]
-        for i in (0...20)
-            rendezvous.add_node(i.to_s)
-            new_placements[i.to_s] = []
-        end
-        for i in (0...1000)
-            node = rendezvous.find_node(i.to_s)
-            new_placements[node].push(i)
-        end
-
-        keys = placements.values.flatten
-        new_keys = new_placements.values.flatten
-        assert_equal(keys.sort, new_keys.sort)
-
-        added = 0
-        removed = 0
-        new_placements.each do |node, assignments|
-            after = assignments.to_set
-            before = placements.fetch(node, []).to_set
-            removed += before.difference(after).length
-            added += after.difference(before).length
-        end
-
-        assert_equal(added, removed)
-        assert_equal(1062, (added + removed))
+    placements = Hash[]
+    for i in (0...10)
+      rendezvous.add_node(i.to_s)
+      placements[i.to_s] = []
+    end
+    for i in (0...1000)
+      node = rendezvous.find_node(i.to_s)
+      placements[node].push(i)
     end
 
-    def test_shrink
-        rendezvous = RendezvousHash.new()
-
-        placements = {}
-        for i in (0...10)
-            rendezvous.add_node(i.to_s)
-            placements[i.to_s] = []
-        end
-        for i in (0...1000)
-            node = rendezvous.find_node(i.to_s)
-            placements[node].push(i)
-        end
-
-        rendezvous.remove_node('9')
-        new_placements = {}
-        for i in (0...9)
-            new_placements[i.to_s] = []
-        end
-        for i in (0...1000)
-            node = rendezvous.find_node(i.to_s)
-            new_placements[node].push(i)
-        end
-
-        keys = placements.values.flatten
-        new_keys = new_placements.values.flatten
-        assert_equal(keys.sort, new_keys.sort)
-
-        added = 0
-        removed = 0
-        placements.each do |node, assignments|
-            after = assignments.to_set
-            before = new_placements.fetch(node, []).to_set
-            removed += before.difference(after).length
-            added += after.difference(before).length
-        end
-
-        assert_equal(added, removed)
-        assert_equal(202, (added + removed))
+    new_placements = Hash[]
+    for i in (0...20)
+      rendezvous.add_node(i.to_s)
+      new_placements[i.to_s] = []
     end
+    for i in (0...1000)
+      node = rendezvous.find_node(i.to_s)
+      new_placements[node].push(i)
+    end
+
+    keys = placements.values.flatten
+    new_keys = new_placements.values.flatten
+    assert_equal(keys.sort, new_keys.sort)
+
+    added = 0
+    removed = 0
+    new_placements.each do |node, assignments|
+      after = assignments.to_set
+      before = placements.fetch(node, []).to_set
+      removed += before.difference(after).length
+      added += after.difference(before).length
+    end
+
+    assert_equal(added, removed)
+    assert_equal(1062, (added + removed))
+  end
+
+  def test_shrink
+    rendezvous = RendezvousHash.new()
+
+    placements = {}
+    for i in (0...10)
+      rendezvous.add_node(i.to_s)
+      placements[i.to_s] = []
+    end
+    for i in (0...1000)
+      node = rendezvous.find_node(i.to_s)
+      placements[node].push(i)
+    end
+
+    rendezvous.remove_node('9')
+    new_placements = {}
+    for i in (0...9)
+      new_placements[i.to_s] = []
+    end
+    for i in (0...1000)
+      node = rendezvous.find_node(i.to_s)
+      new_placements[node].push(i)
+    end
+
+    keys = placements.values.flatten
+    new_keys = new_placements.values.flatten
+    assert_equal(keys.sort, new_keys.sort)
+
+    added = 0
+    removed = 0
+    placements.each do |node, assignments|
+      after = assignments.to_set
+      before = new_placements.fetch(node, []).to_set
+      removed += before.difference(after).length
+      added += after.difference(before).length
+    end
+
+    assert_equal(added, removed)
+    assert_equal(202, (added + removed))
+  end
 
 end
