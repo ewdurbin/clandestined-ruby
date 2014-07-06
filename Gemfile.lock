@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    clandestiny (1.0.0a)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rake (0.8.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  clandestiny!
+  rake (= 0.8.7)
