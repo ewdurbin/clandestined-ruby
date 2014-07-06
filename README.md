@@ -17,6 +17,8 @@ clients and ease of use.
 Currently targetting for support:
   - Ruby 1.8.6 through Ruby 2.1.x
 
+[![Build Status](https://travis-ci.org/ewdurbin/clandestiny-ruby.svg?branch=master)](https://travis-ci.org/ewdurbin/clandestiny-ruby)
+
 ## example usage
 
 ```ruby
