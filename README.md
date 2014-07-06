@@ -17,15 +17,6 @@ clients and ease of use.
 Currently targetting for support:
   - Ruby 1.8.6 through Ruby 2.1.x
 
-## characteristics
-
-### cluster distribution
-**pretty charts here**
-
-### cluster resizing
-**pretty charts here**
-
-
 ## example usage
 
 ```ruby
