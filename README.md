@@ -71,7 +71,7 @@ nodes = Hash[
     '9' => Hash['name' => 'node9.example.com'],
 ]
 
-cluster = Cluster.new(nodes, replicas=1)
+cluster = Cluster.new(nodes, 1)
 rendezvous = RendezvousHash.new(nodes.keys)
 
 puts cluster.find_nodes('mykey')
@@ -82,4 +82,42 @@ outputs
 ```
 4
 4
+```
+
+## advanced usage
+
+### murmur3 seeding
+
+if you plan to use keys based on untrusted input (not really supported, but go
+ahead), it would be best to use a custom seed for hashing. although this
+technique is by no means a way to fully mitigate a DoS attack using crafted
+keys, it may make you sleep better at night.
+
+```ruby
+require 'clandestine/cluster'
+require 'clandestine/rendezvous_hash'
+
+nodes = Hash[
+    '1' => Hash['name' => 'node1.example.com'],
+    '2' => Hash['name' => 'node2.example.com'],
+    '3' => Hash['name' => 'node3.example.com'],
+    '4' => Hash['name' => 'node4.example.com'],
+    '5' => Hash['name' => 'node5.example.com'],
+    '6' => Hash['name' => 'node6.example.com'],
+    '7' => Hash['name' => 'node7.example.com'],
+    '8' => Hash['name' => 'node8.example.com'],
+    '9' => Hash['name' => 'node9.example.com'],
+]
+
+cluster = Cluster.new(nodes, 1, 1337)
+rendezvous = RendezvousHash.new(nodes.keys, 1337)
+
+puts cluster.find_nodes('mykey')
+puts rendezvous.find_node('mykey')
+```
+
+outputs (note they have changed from above)
+```
+7
+7
 ```
