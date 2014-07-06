@@ -6,7 +6,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    rake (0.8.7)
+    rake (0.9.6)
     rake-compiler (0.8.3)
       rake
 
@@ -15,5 +15,5 @@ PLATFORMS
 
 DEPENDENCIES
   clandestiny!
-  rake (= 0.8.7)
+  rake (= 0.9.6)
   rake-compiler (= 0.8.3)
