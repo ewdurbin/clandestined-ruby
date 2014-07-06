@@ -186,10 +186,10 @@ class ClusterTestCase < Test::Unit::TestCase
 
         assert_equal(['2', '3'], cluster.find_nodes('lol'))
         assert_equal(['6', '2'], cluster.find_nodes('wat'))
-        assert_equal(['2', '4'], cluster.find_nodes('ok'))
-        assert_equal(['6', '1'], cluster.find_nodes('bar'))
+        assert_equal(['5', '2'], cluster.find_nodes('ok'))
+        assert_equal(['1', '3'], cluster.find_nodes('bar'))
         assert_equal(['1', '3'], cluster.find_nodes('foo'))
-        assert_equal(['4', '6'], cluster.find_nodes('slap'))
+        assert_equal(['2', '4'], cluster.find_nodes('slap'))
     end
 
     def test_find_nodes_by_index
@@ -267,7 +267,7 @@ class ClusterIntegrationTestCase < Test::Unit::TestCase
         end
 
         assert_equal(added, removed)
-        assert_equal(1340, (added + removed))
+        assert_equal(1384, (added + removed))
     end
 
     def test_shrink
@@ -327,7 +327,7 @@ class ClusterIntegrationTestCase < Test::Unit::TestCase
         end
 
         assert_equal(added, removed)
-        assert_equal(9892, (added + removed))
+        assert_equal(9804, (added + removed))
     end
 
     def test_add_zone
