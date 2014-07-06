@@ -1,8 +1,8 @@
-require 'murmur3_native'
+require 'murmur3'
 
 class Cluster
 
-  include Murmur3Native
+  include Murmur3
 
   attr_reader :hash_function
   attr_reader :replicas
