@@ -4,7 +4,11 @@ require 'rake/extensiontask'
 
 def can_compile_extensions
   if defined? RUBY_DESCRIPTION
-    false if RUBY_DESCRIPTION =~ /jruby/
+    if RUBY_DESCRIPTION =~ /jruby/
+      false
+    else
+      true
+    end
   else
     true
   end
