@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.extensions = ['ext/murmur3_native/extconf.rb']
 
   s.add_development_dependency 'rake', '0.8.7'
-  s.add_development_dependency 'rake-compiler'
+  s.add_development_dependency 'rake-compiler', '0.8.3'
 
   s.has_rdoc = false
 
