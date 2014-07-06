@@ -9,9 +9,11 @@ Gem::Specification.new do |s|
 
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- test/*`.split("\n")
-  s.require_paths = ['lib']
+  s.require_paths = ['lib', 'ext']
+  s.extensions = ['ext/murmur3_native/extconf.rb']
 
   s.add_development_dependency 'rake', '0.8.7'
+  s.add_development_dependency 'rake-compiler'
 
   s.has_rdoc = false
 

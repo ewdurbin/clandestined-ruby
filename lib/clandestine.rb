@@ -1,12 +1,14 @@
-require 'murmur3'
+require 'murmur3_native'
 require 'set'
+
+include Murmur3Native
 
 class RendezvousHash
 
   attr_reader :nodes
   attr_reader :hash_function
 
-  def initialize(nodes=nil, hash_function=method(:murmur3_32_str_hash))
+  def initialize(nodes=nil, hash_function=method(:murmur3_32))
     @nodes = nodes || []
     @hash_function = hash_function
   end
@@ -34,7 +36,7 @@ class Cluster
   attr_reader :zone_members
   attr_reader :rings
 
-  def initialize(cluster=nil, replicas=2, hash_function=method(:murmur3_32_str_hash)) 
+  def initialize(cluster=nil, replicas=2, hash_function=method(:murmur3_32))
     @hash_function = hash_function
 
     @replicas = replicas
