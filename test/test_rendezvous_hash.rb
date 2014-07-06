@@ -11,14 +11,14 @@ class RendezvousHashTestCase < Test::Unit::TestCase
   def test_init_no_options
     rendezvous = RendezvousHash.new()
     assert_equal(0, rendezvous.nodes.length)
-    assert_equal(:murmur3_32_str_hash, rendezvous.hash_function.name)
+    assert_equal(1361238019, rendezvous.hash_function.call('6666'))
   end
 
   def test_init
     nodes = ['0', '1', '2']
     rendezvous = RendezvousHash.new(nodes)
     assert_equal(3, rendezvous.nodes.length)
-    assert_equal(:murmur3_32_str_hash, rendezvous.hash_function.name)
+    assert_equal(1361238019, rendezvous.hash_function.call('6666'))
   end
 
   def test_add_node

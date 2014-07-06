@@ -9,7 +9,7 @@ class ClusterTestCase < Test::Unit::TestCase
 
     def test_init_no_options
         cluster = Cluster.new()
-        assert_equal(:murmur3_32_str_hash, cluster.hash_function.name)
+        assert_equal(1361238019, cluster.hash_function.call('6666'))
         assert_equal(2, cluster.replicas)
         assert_equal(Hash[], cluster.nodes)
         assert_equal([], cluster.zones)

@@ -105,7 +105,7 @@ class Cluster
   def find_nodes(key, offset=nil)
     nodes = []
     unless offset
-      offset = key[0].unpack('c')[0]
+      offset = key[0,1].unpack('c')[0]
     end
     for i in (0...@replicas)
       zone = @zones[(i + offset.to_i) % @zones.length]
