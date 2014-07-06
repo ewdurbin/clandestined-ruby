@@ -5,14 +5,23 @@ class Cluster
   include Murmur3
 
   attr_reader :hash_function
+  attr_reader :murmur_seed
   attr_reader :replicas
   attr_reader :nodes
   attr_reader :zones
   attr_reader :zone_members
   attr_reader :rings
 
-  def initialize(cluster_config=nil, replicas=2, hash_function=method(:murmur3_32))
-    @hash_function = hash_function
+  def initialize(cluster_config=nil, replicas=2, murmur_seed=0, hash_function=method(:murmur3_32))
+    @murmur_seed = murmur_seed
+
+    if hash_function == method(:murmur3_32)
+      @hash_function = lambda { |key| hash_function.call(key, murmur_seed) }
+    elsif murmur_seed != 0
+      raise ArgumentError, 'Cannot apply seed to custom hash function #{hash_function}'
+    else
+      @hash_function = hash_function
+    end
 
     @replicas = replicas
     @nodes = Hash[]
@@ -56,7 +65,7 @@ class Cluster
     end
     add_zone(node_zone)
     unless rings.has_key?(node_zone)
-      @rings[node_zone] = RendezvousHash.new(nil, hash_function)
+      @rings[node_zone] = RendezvousHash.new(nil, murmur_seed, &hash_function)
     end
     @rings[node_zone].add_node(node_id)
     @nodes[node_id] = node_name
@@ -79,22 +88,22 @@ class Cluster
     nodes[node_id]
   end
 
-  def find_nodes(key, offset=nil)
+  def find_nodes(search_key, offset=nil)
     nodes = []
     unless offset
-      offset = key.split("").map{|char| char[0,1].unpack('c')[0]}.inject(0) {|sum, i|  sum + i }
+      offset = search_key.split("").map{|char| char[0,1].unpack('c')[0]}.inject(0) {|sum, i|  sum + i }
     end
     for i in (0...replicas)
       zone = zones[(i + offset.to_i) % zones.length]
-      nodes << rings[zone].find_node(key)
+      nodes << rings[zone].find_node(search_key)
     end
     nodes
   end
 
   def find_nodes_by_index(product_id, block_index)
     offset = (product_id.to_i + block_index.to_i) % zones.length
-    key = "#{product_id}-#{block_index}"
-    find_nodes(key, offset)
+    search_key = "#{product_id}-#{block_index}"
+    find_nodes(search_key, offset)
   end
 
 end

@@ -4,6 +4,9 @@ require 'set'
 
 require 'clandestine/cluster'
 
+def my_hash_function(key)
+  return 310130709337150341200260887719094037511
+end
 
 class ClusterTestCase < Test::Unit::TestCase
 
@@ -16,6 +19,20 @@ class ClusterTestCase < Test::Unit::TestCase
         assert_equal(Hash[], cluster.zone_members)
         assert_equal(Hash[], cluster.rings)
     end
+
+  def test_murmur_seed
+    cluster = Cluster.new(nil, 2, 10)
+    assert_equal(2981722772, cluster.hash_function.call('6666'))
+  end
+
+  def test_custom_hash_function
+      cluster = Cluster.new(nil, 2, 0, method(:my_hash_function))
+      assert_equal(310130709337150341200260887719094037511, cluster.hash_function.call('6666'))
+  end
+
+  def test_seeded_custom_hash_function
+    assert_raises(ArgumentError) { Cluster.new(nil, 2, 10, method(:my_hash_function)) }
+  end
 
     def test_init_single_zone
         cluster_config = {
