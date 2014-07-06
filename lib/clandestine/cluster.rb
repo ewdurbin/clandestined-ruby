@@ -11,7 +11,7 @@ class Cluster
   attr_reader :zone_members
   attr_reader :rings
 
-  def initialize(cluster=nil, replicas=2, hash_function=method(:murmur3_32))
+  def initialize(cluster_config=nil, replicas=2, hash_function=method(:murmur3_32))
     @hash_function = hash_function
 
     @replicas = replicas
@@ -20,8 +20,8 @@ class Cluster
     @zone_members = Hash[]
     @rings = Hash[]
 
-    if cluster
-      cluster.each do |node, node_data|
+    if cluster_config
+      cluster_config.each do |node, node_data|
         name = node_data['name']
         zone = node_data['zone']
         add_zone(zone)
