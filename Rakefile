@@ -3,8 +3,11 @@ require 'rake/testtask'
 require 'rake/extensiontask'
 
 def can_compile_extensions
-  return false if RUBY_DESCRIPTION =~ /jruby/
-  return true
+  if defined? RUBY_DESCRIPTION
+    return false if RUBY_DESCRIPTION =~ /jruby/
+  else
+    return true
+  end
 end
 
 Rake::ExtensionTask.new('murmur3_native')
