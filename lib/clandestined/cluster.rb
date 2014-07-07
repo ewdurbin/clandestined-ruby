@@ -43,9 +43,7 @@ class Cluster
 
   def add_zone(zone)
     @zones.push(zone) unless zones.include?(zone)
-    unless zone_members.has_key?(zone)
-      @zone_members[zone] = []
-    end
+    @zone_members[zone] ||= []
     @zones.sort!
   end
 
@@ -63,7 +61,7 @@ class Cluster
 
   def add_node(node_id, node_zone=nil, node_name=nil)
     if nodes.include?(node_id)
-        raise ArgumentError, 'Node with id #{node_id} already exists'
+      raise ArgumentError, 'Node with id #{node_id} already exists'
     end
     add_zone(node_zone)
     unless rings.has_key?(node_zone)
@@ -71,10 +69,7 @@ class Cluster
     end
     @rings[node_zone].add_node(node_id)
     @nodes[node_id] = node_name
-    unless zone_members.has_key?(node_zone)
-      @zone_members[node_zone] = []
-    end
-    @zone_members[node_zone].push(node_id)
+    (@zone_members[node_zone] ||= []) << node_id
   end
 
   def remove_node(node_id, node_zone=nil, node_name=nil)
@@ -82,7 +77,7 @@ class Cluster
     @nodes.delete(node_id)
     @zone_members[node_zone].delete(node_id)
     if zone_members[node_zone].length == 0
-        remove_zone(node_zone)
+      remove_zone(node_zone)
     end
   end
 
@@ -93,7 +88,7 @@ class Cluster
   def find_nodes(search_key, offset=nil)
     nodes = []
     unless offset
-      offset = search_key.split("").map{|char| char[0,1].unpack('c')[0]}.inject(0) {|sum, i|  sum + i }
+      offset = search_key.split('').inject(0) { |s, c| s += c[0,1].unpack('c')[0] }
     end
     for i in (0...replicas)
       zone = zones[(i + offset.to_i) % zones.length]
