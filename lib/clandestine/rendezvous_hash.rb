@@ -15,7 +15,7 @@ class RendezvousHash
     if hash_function == method(:murmur3_32)
       @hash_function = lambda { |key| hash_function.call(key, murmur_seed) }
     elsif murmur_seed != 0
-      raise ArgumentError, 'Cannot apply seed to custom hash function #{hash_function}'
+      raise ArgumentError, "Cannot apply seed to custom hash function #{hash_function}"
     else
       @hash_function = hash_function
     end

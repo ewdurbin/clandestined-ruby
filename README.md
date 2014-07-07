@@ -149,7 +149,7 @@ nodes = Hash[
 ]
 
 def my_hash_function(key)
-  Digest::MD5.hexdigest(key).to_i(16)
+  Digest::SHA1.hexdigest(key).to_i(16)
 end
 
 cluster = Cluster.new(nodes, 1, 0, method(:my_hash_function))
@@ -161,6 +161,6 @@ puts rendezvous.find_node('mykey')
 
 outputs
 ```
-4
-4
+1
+1
 ```

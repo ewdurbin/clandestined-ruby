@@ -65,7 +65,7 @@ class Cluster
     end
     add_zone(node_zone)
     unless rings.has_key?(node_zone)
-      @rings[node_zone] = RendezvousHash.new(nil, murmur_seed, &hash_function)
+      @rings[node_zone] = RendezvousHash.new(nil, 0, self.hash_function)
     end
     @rings[node_zone].add_node(node_id)
     @nodes[node_id] = node_name
