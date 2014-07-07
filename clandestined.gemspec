@@ -1,6 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 'clandestined'
   s.version = '1.0.0a'
+  s.licenses = ['MIT']
   s.date = Time.now.strftime('%Y-%m-%d')
   s.summary = 'rendezvous hashing implementation based on murmur3 hash'
   s.author = "Ernest W. Durbin III"
