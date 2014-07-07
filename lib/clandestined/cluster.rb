@@ -43,9 +43,7 @@ class Cluster
 
   def add_zone(zone)
     @zones.push(zone) unless zones.include?(zone)
-    unless zone_members.has_key?(zone)
-      @zone_members[zone] = []
-    end
+    @zone_members[zone] ||= []
     @zones.sort!
   end
 
@@ -71,10 +69,7 @@ class Cluster
     end
     @rings[node_zone].add_node(node_id)
     @nodes[node_id] = node_name
-    unless zone_members.has_key?(node_zone)
-      @zone_members[node_zone] = []
-    end
-    @zone_members[node_zone].push(node_id)
+    (@zone_members[node_zone] ||= []) << node_id
   end
 
   def remove_node(node_id, node_zone=nil, node_name=nil)
