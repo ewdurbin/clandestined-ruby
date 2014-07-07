@@ -9,6 +9,7 @@ GEM
     rake (0.9.6)
     rake-compiler (0.8.3)
       rake
+    rubydoctest (1.1.3)
 
 PLATFORMS
   ruby
@@ -17,3 +18,4 @@ DEPENDENCIES
   clandestiny!
   rake (= 0.9.6)
   rake-compiler (= 0.8.3)
+  rubydoctest (= 1.1.3)

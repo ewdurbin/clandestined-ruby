@@ -22,30 +22,23 @@ Currently targetting for support:
 ## example usage
 
 ```ruby
-require 'clandestine/cluster'
-
-nodes = Hash[
-    '1' => Hash['name' => 'node1.example.com', 'zone' => 'us-east-1a'],
-    '2' => Hash['name' => 'node2.example.com', 'zone' => 'us-east-1a'],
-    '3' => Hash['name' => 'node3.example.com', 'zone' => 'us-east-1a'],
-    '4' => Hash['name' => 'node4.example.com', 'zone' => 'us-east-1b'],
-    '5' => Hash['name' => 'node5.example.com', 'zone' => 'us-east-1b'],
-    '6' => Hash['name' => 'node6.example.com', 'zone' => 'us-east-1b'],
-    '7' => Hash['name' => 'node7.example.com', 'zone' => 'us-east-1c'],
-    '8' => Hash['name' => 'node8.example.com', 'zone' => 'us-east-1c'],
-    '9' => Hash['name' => 'node9.example.com', 'zone' => 'us-east-1c'],
-]
-
-cluster = Cluster.new(nodes)
-nodes = cluster.find_nodes('mykey')
-puts nodes[0]
-puts nodes[1]
-```
-
-outputs
-```
-4
-8
+>> require 'clandestine/cluster'
+>>
+>> nodes = Hash[
+     '1' => Hash['name' => 'node1.example.com', 'zone' => 'us-east-1a'],
+     '2' => Hash['name' => 'node2.example.com', 'zone' => 'us-east-1a'],
+     '3' => Hash['name' => 'node3.example.com', 'zone' => 'us-east-1a'],
+     '4' => Hash['name' => 'node4.example.com', 'zone' => 'us-east-1b'],
+     '5' => Hash['name' => 'node5.example.com', 'zone' => 'us-east-1b'],
+     '6' => Hash['name' => 'node6.example.com', 'zone' => 'us-east-1b'],
+     '7' => Hash['name' => 'node7.example.com', 'zone' => 'us-east-1c'],
+     '8' => Hash['name' => 'node8.example.com', 'zone' => 'us-east-1c'],
+     '9' => Hash['name' => 'node9.example.com', 'zone' => 'us-east-1c'],
+     ]
+>>
+>> cluster = Cluster.new(nodes)
+>> cluster.find_nodes('mykey')
+=> ["4", "8"]
 ```
 
 by default, `Cluster` will place 2 replicas around the cluster taking care to
@@ -56,32 +49,28 @@ invoke the `RendezvousHash` class directly, or use a `Cluster` with replicas
 set to 1
 
 ```ruby
-require 'clandestine/cluster'
-require 'clandestine/rendezvous_hash'
-
-nodes = Hash[
-    '1' => Hash['name' => 'node1.example.com'],
-    '2' => Hash['name' => 'node2.example.com'],
-    '3' => Hash['name' => 'node3.example.com'],
-    '4' => Hash['name' => 'node4.example.com'],
-    '5' => Hash['name' => 'node5.example.com'],
-    '6' => Hash['name' => 'node6.example.com'],
-    '7' => Hash['name' => 'node7.example.com'],
-    '8' => Hash['name' => 'node8.example.com'],
-    '9' => Hash['name' => 'node9.example.com'],
-]
-
-cluster = Cluster.new(nodes, 1)
-rendezvous = RendezvousHash.new(nodes.keys)
-
-puts cluster.find_nodes('mykey')
-puts rendezvous.find_node('mykey')
-```
-
-outputs
-```
-4
-4
+>> require 'clandestine/cluster'
+>> require 'clandestine/rendezvous_hash'
+>>
+>> nodes = Hash[
+     '1' => Hash['name' => 'node1.example.com'],
+     '2' => Hash['name' => 'node2.example.com'],
+     '3' => Hash['name' => 'node3.example.com'],
+     '4' => Hash['name' => 'node4.example.com'],
+     '5' => Hash['name' => 'node5.example.com'],
+     '6' => Hash['name' => 'node6.example.com'],
+     '7' => Hash['name' => 'node7.example.com'],
+     '8' => Hash['name' => 'node8.example.com'],
+     '9' => Hash['name' => 'node9.example.com'],
+     ]
+>>
+>> cluster = Cluster.new(nodes, 1)
+>> rendezvous = RendezvousHash.new(nodes.keys)
+>>
+>> cluster.find_nodes('mykey')
+=> ["4"]
+>> rendezvous.find_node('mykey')
+=> "4"
 ```
 
 ## advanced usage
@@ -94,32 +83,28 @@ technique is by no means a way to fully mitigate a DoS attack using crafted
 keys, it may make you sleep better at night.
 
 ```ruby
-require 'clandestine/cluster'
-require 'clandestine/rendezvous_hash'
-
-nodes = Hash[
-    '1' => Hash['name' => 'node1.example.com'],
-    '2' => Hash['name' => 'node2.example.com'],
-    '3' => Hash['name' => 'node3.example.com'],
-    '4' => Hash['name' => 'node4.example.com'],
-    '5' => Hash['name' => 'node5.example.com'],
-    '6' => Hash['name' => 'node6.example.com'],
-    '7' => Hash['name' => 'node7.example.com'],
-    '8' => Hash['name' => 'node8.example.com'],
-    '9' => Hash['name' => 'node9.example.com'],
-]
-
-cluster = Cluster.new(nodes, 1, 1337)
-rendezvous = RendezvousHash.new(nodes.keys, 1337)
-
-puts cluster.find_nodes('mykey')
-puts rendezvous.find_node('mykey')
-```
-
-outputs (note they have changed from above)
-```
-7
-7
+>> require 'clandestine/cluster'
+>> require 'clandestine/rendezvous_hash'
+>>
+>> nodes = Hash[
+     '1' => Hash['name' => 'node1.example.com'],
+     '2' => Hash['name' => 'node2.example.com'],
+     '3' => Hash['name' => 'node3.example.com'],
+     '4' => Hash['name' => 'node4.example.com'],
+     '5' => Hash['name' => 'node5.example.com'],
+     '6' => Hash['name' => 'node6.example.com'],
+     '7' => Hash['name' => 'node7.example.com'],
+     '8' => Hash['name' => 'node8.example.com'],
+     '9' => Hash['name' => 'node9.example.com'],
+     ]
+>>
+>> cluster = Cluster.new(nodes, 1, 1337)
+>> rendezvous = RendezvousHash.new(nodes.keys, 1337)
+>>
+>> cluster.find_nodes('mykey')
+=> ["7"]
+>> rendezvous.find_node('mykey')
+=> "7"
 ```
 
 ### supplying your own hash function
@@ -132,35 +117,31 @@ or `Cluster` object as a callable which takes a byte string `key` and returns
 an integer.
 
 ```ruby
-require 'digest'
-require 'clandestine/cluster'
-require 'clandestine/rendezvous_hash'
-
-nodes = Hash[
-    '1' => Hash['name' => 'node1.example.com'],
-    '2' => Hash['name' => 'node2.example.com'],
-    '3' => Hash['name' => 'node3.example.com'],
-    '4' => Hash['name' => 'node4.example.com'],
-    '5' => Hash['name' => 'node5.example.com'],
-    '6' => Hash['name' => 'node6.example.com'],
-    '7' => Hash['name' => 'node7.example.com'],
-    '8' => Hash['name' => 'node8.example.com'],
-    '9' => Hash['name' => 'node9.example.com'],
-]
-
-def my_hash_function(key)
-  Digest::SHA1.hexdigest(key).to_i(16)
-end
-
-cluster = Cluster.new(nodes, 1, 0, method(:my_hash_function))
-rendezvous = RendezvousHash.new(nodes.keys, 0, method(:my_hash_function))
-
-puts cluster.find_nodes('mykey')
-puts rendezvous.find_node('mykey')
-```
-
-outputs (note they have changed once more)
-```
-1
-1
+>> require 'digest'
+>> require 'clandestine/cluster'
+>> require 'clandestine/rendezvous_hash'
+>>
+>> nodes = Hash[
+     '1' => Hash['name' => 'node1.example.com'],
+     '2' => Hash['name' => 'node2.example.com'],
+     '3' => Hash['name' => 'node3.example.com'],
+     '4' => Hash['name' => 'node4.example.com'],
+     '5' => Hash['name' => 'node5.example.com'],
+     '6' => Hash['name' => 'node6.example.com'],
+     '7' => Hash['name' => 'node7.example.com'],
+     '8' => Hash['name' => 'node8.example.com'],
+     '9' => Hash['name' => 'node9.example.com'],
+     ]
+>>
+>> def my_hash_function(key)
+     Digest::SHA1.hexdigest(key).to_i(16)
+     end
+>>
+>> cluster = Cluster.new(nodes, 1, 0, method(:my_hash_function))
+>> rendezvous = RendezvousHash.new(nodes.keys, 0, method(:my_hash_function))
+>>
+>> cluster.find_nodes('mykey')
+=> ["1"]
+>> rendezvous.find_node('mykey')
+=> "1"
 ```

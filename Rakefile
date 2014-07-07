@@ -22,9 +22,12 @@ Rake::TestTask.new do |t|
   t.test_files = FileList['test/test*.rb']
 end
 
+task :test_docs do
+  system("rubydoctest README.md") or exit!(1)
+end
 
 if can_compile_extensions
-  task :default => [:compile, :test]
+  task :default => [:compile, :test, :test_docs]
 else
-  task :default => [:test]
+  task :default => [:test, :test_docs]
 end
