@@ -28,7 +28,11 @@ module Clandestined
     end
 
     def remove_node(node)
-      @nodes.delete(node) if @nodes.include?(node)
+      if @nodes.include?(node)
+        @nodes.delete(node)
+      else
+        raise ArgumentError, "No such node #{node} to remove"
+      end
     end
 
     def find_node(key)

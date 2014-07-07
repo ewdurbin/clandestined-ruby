@@ -56,7 +56,7 @@ class RendezvousHashTestCase < Test::Unit::TestCase
     rendezvous = RendezvousHash.new(nodes)
     rendezvous.remove_node('2')
     assert_equal(2, rendezvous.nodes.length)
-    rendezvous.remove_node('2')
+    assert_raises(ArgumentError) { rendezvous.remove_node(2, rendezvous.nodes.length) }
     assert_equal(2, rendezvous.nodes.length)
     rendezvous.remove_node('1')
     assert_equal(1, rendezvous.nodes.length)

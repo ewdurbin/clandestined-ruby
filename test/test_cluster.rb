@@ -432,6 +432,7 @@ class ClusterIntegrationTestCase < Test::Unit::TestCase
     cluster.remove_node('6', 'c', 'node6')
     cluster.remove_node('11', 'c', 'node11')
     cluster.remove_node('12', 'c', 'node12')
+    assert_raises(ArgumentError) {cluster.remove_zone('c')}
 
     new_placements = Hash[]
     for i in cluster.nodes.keys

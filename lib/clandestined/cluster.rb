@@ -57,6 +57,8 @@ module Clandestined
         @zones.sort!
         @rings.delete(zone)
         @zone_members.delete(zone)
+      else
+        raise ArgumentError, "No such zone #{zone} to remove"
       end
     end
 
