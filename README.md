@@ -159,7 +159,7 @@ puts cluster.find_nodes('mykey')
 puts rendezvous.find_node('mykey')
 ```
 
-outputs
+outputs (note they have changed once more)
 ```
 1
 1
