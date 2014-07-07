@@ -4,6 +4,8 @@ require 'set'
 
 require 'clandestined/cluster'
 
+include Clandestined
+
 def my_hash_function(key)
   Digest::MD5.hexdigest(key).to_i(16)
 end
