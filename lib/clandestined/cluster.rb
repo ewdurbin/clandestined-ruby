@@ -63,7 +63,7 @@ class Cluster
 
   def add_node(node_id, node_zone=nil, node_name=nil)
     if nodes.include?(node_id)
-        raise ArgumentError, 'Node with id #{node_id} already exists'
+      raise ArgumentError, 'Node with id #{node_id} already exists'
     end
     add_zone(node_zone)
     unless rings.has_key?(node_zone)
@@ -82,7 +82,7 @@ class Cluster
     @nodes.delete(node_id)
     @zone_members[node_zone].delete(node_id)
     if zone_members[node_zone].length == 0
-        remove_zone(node_zone)
+      remove_zone(node_zone)
     end
   end
 
