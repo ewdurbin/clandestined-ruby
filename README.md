@@ -36,7 +36,7 @@ Currently targetting for support:
      '9' => Hash['name' => 'node9.example.com', 'zone' => 'us-east-1c'],
      ]
 >>
->> cluster = Cluster.new(nodes)
+>> cluster = Clandestined::Cluster.new(nodes)
 >> cluster.find_nodes('mykey')
 => ["4", "8"]
 ```
@@ -64,8 +64,8 @@ set to 1
      '9' => Hash['name' => 'node9.example.com'],
      ]
 >>
->> cluster = Cluster.new(nodes, 1)
->> rendezvous = RendezvousHash.new(nodes.keys)
+>> cluster = Clandestined::Cluster.new(nodes, 1)
+>> rendezvous = Clandestined::RendezvousHash.new(nodes.keys)
 >>
 >> cluster.find_nodes('mykey')
 => ["4"]
@@ -98,8 +98,8 @@ keys, it may make you sleep better at night.
      '9' => Hash['name' => 'node9.example.com'],
      ]
 >>
->> cluster = Cluster.new(nodes, 1, 1337)
->> rendezvous = RendezvousHash.new(nodes.keys, 1337)
+>> cluster = Clandestined::Cluster.new(nodes, 1, 1337)
+>> rendezvous = Clandestined::RendezvousHash.new(nodes.keys, 1337)
 >>
 >> cluster.find_nodes('mykey')
 => ["7"]
@@ -137,8 +137,9 @@ an integer.
      Digest::SHA1.hexdigest(key).to_i(16)
      end
 >>
->> cluster = Cluster.new(nodes, 1, 0, method(:my_hash_function))
->> rendezvous = RendezvousHash.new(nodes.keys, 0, method(:my_hash_function))
+>> cluster = Clandestined::Cluster.new(nodes, 1, 0, method(:my_hash_function))
+>> rendezvous = Clandestined::RendezvousHash.new(nodes.keys, 0,
+                                                 method(:my_hash_function))
 >>
 >> cluster.find_nodes('mykey')
 => ["1"]
