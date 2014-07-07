@@ -88,7 +88,7 @@ class Cluster
   def find_nodes(search_key, offset=nil)
     nodes = []
     unless offset
-      offset = search_key.split("").map{|char| char[0,1].unpack('c')[0]}.inject(0) {|sum, i|  sum + i }
+      offset = search_key.split('').inject(0) { |s, c| s += c[0].ord }
     end
     for i in (0...replicas)
       zone = zones[(i + offset.to_i) % zones.length]
