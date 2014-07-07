@@ -77,10 +77,17 @@ set to 1
 
 ### murmur3 seeding
 
-if you plan to use keys based on untrusted input (not really supported, but go
-ahead), it would be best to use a custom seed for hashing. although this
-technique is by no means a way to fully mitigate a DoS attack using crafted
-keys, it may make you sleep better at night.
+if you plan to use keys based on untrusted input (supported, but go ahead),
+it would be best to use a custom seed for hashing. although this technique is
+by no means a way to fully mitigate a DoS attack using crafted keys, it may
+help you sleep better at night.
+
+**DISCLAIMER**
+
+clandestined was not designed with consideration for untrusted input, please
+see LICENSE.
+
+**END DISCLAIMER**
 
 ```ruby
 >> require 'clandestined/cluster'
@@ -105,44 +112,4 @@ keys, it may make you sleep better at night.
 => ["7"]
 >> rendezvous.find_node('mykey')
 => "7"
-```
-
-### supplying your own hash function
-
-a more robust, but possibly slower solution to mitigate DoS vulnerability by
-crafted key might be to supply your own cryptograpic hash function.
-
-in order for this to work, your method must be supplied to the `RendezvousHash`
-or `Cluster` object as a callable which takes a byte string `key` and returns
-an integer.
-
-```ruby
->> require 'digest'
->> require 'clandestined/cluster'
->> require 'clandestined/rendezvous_hash'
->>
->> nodes = Hash[
-     '1' => Hash['name' => 'node1.example.com'],
-     '2' => Hash['name' => 'node2.example.com'],
-     '3' => Hash['name' => 'node3.example.com'],
-     '4' => Hash['name' => 'node4.example.com'],
-     '5' => Hash['name' => 'node5.example.com'],
-     '6' => Hash['name' => 'node6.example.com'],
-     '7' => Hash['name' => 'node7.example.com'],
-     '8' => Hash['name' => 'node8.example.com'],
-     '9' => Hash['name' => 'node9.example.com'],
-     ]
->>
->> def my_hash_function(key)
-     Digest::SHA1.hexdigest(key).to_i(16)
-     end
->>
->> cluster = Clandestined::Cluster.new(nodes, 1, 0, method(:my_hash_function))
->> rendezvous = Clandestined::RendezvousHash.new(nodes.keys, 0,
-                                                 method(:my_hash_function))
->>
->> cluster.find_nodes('mykey')
-=> ["1"]
->> rendezvous.find_node('mykey')
-=> "1"
 ```

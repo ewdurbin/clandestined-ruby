@@ -8,23 +8,15 @@ module Clandestined
     include Murmur3
 
     attr_reader :hash_function
-    attr_reader :murmur_seed
+    attr_reader :seed
     attr_reader :replicas
     attr_reader :nodes
     attr_reader :zones
     attr_reader :zone_members
     attr_reader :rings
 
-    def initialize(cluster_config=nil, replicas=2, murmur_seed=0, hash_function=method(:murmur3_32))
-      @murmur_seed = murmur_seed
-
-      if hash_function == method(:murmur3_32)
-        @hash_function = lambda { |key| hash_function.call(key, murmur_seed) }
-      elsif murmur_seed != 0
-        raise ArgumentError, 'Cannot apply seed to custom hash function #{hash_function}'
-      else
-        @hash_function = hash_function
-      end
+    def initialize(cluster_config=nil, replicas=2, seed=0)
+      @seed = seed
 
       @replicas = replicas
       @nodes = Hash[]
@@ -57,6 +49,8 @@ module Clandestined
         @zones.sort!
         @rings.delete(zone)
         @zone_members.delete(zone)
+      else
+        raise ArgumentError, "No such zone #{zone} to remove"
       end
     end
 
@@ -66,7 +60,7 @@ module Clandestined
       end
       add_zone(node_zone)
       unless rings.has_key?(node_zone)
-        @rings[node_zone] = RendezvousHash.new(nil, 0, self.hash_function)
+        @rings[node_zone] = RendezvousHash.new(nil, seed)
       end
       @rings[node_zone].add_node(node_id)
       @nodes[node_id] = node_name
