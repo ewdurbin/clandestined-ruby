@@ -5,7 +5,7 @@ require 'set'
 require 'clandestine/rendezvous_hash'
 
 def my_hash_function(key)
-  return 310130709337150341200260887719094037511
+  Digest::MD5.hexdigest(key).to_i(16)
 end
 
 class RendezvousHashTestCase < Test::Unit::TestCase
