@@ -6,9 +6,6 @@ require 'clandestined/rendezvous_hash'
 
 include Clandestined
 
-def my_hash_function(key)
-  Digest::MD5.hexdigest(key).to_i(16)
-end
 
 class RendezvousHashTestCase < Test::Unit::TestCase
 
@@ -25,18 +22,10 @@ class RendezvousHashTestCase < Test::Unit::TestCase
     assert_equal(1361238019, rendezvous.hash_function.call('6666'))
   end
 
-  def test_murmur_seed
+  def test_seed
     rendezvous = RendezvousHash.new(nil, 10)
+    assert_equal(10, rendezvous.seed)
     assert_equal(2981722772, rendezvous.hash_function.call('6666'))
-  end
-
-  def test_custom_hash_function
-      rendezvous = RendezvousHash.new(nil, 0, method(:my_hash_function))
-      assert_equal(310130709337150341200260887719094037511, rendezvous.hash_function.call('6666'))
-  end
-
-  def test_seeded_custom_hash_function
-    assert_raises(ArgumentError) { RendezvousHash.new(nil, 10, method(:my_hash_function)) }
   end
 
   def test_add_node
