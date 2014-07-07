@@ -2,6 +2,7 @@
 /bin
 /vendor
 /.vendor
+/Gemfile.lock
 
 /pkg
 /tmp
