@@ -1,5 +1,5 @@
 
-require 'clandestine/rendezvous_hash'
+require 'clandestined/rendezvous_hash'
 require 'murmur3'
 
 class Cluster

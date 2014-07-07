@@ -2,7 +2,7 @@
 require 'test/unit'
 require 'set'
 
-require 'clandestine/rendezvous_hash'
+require 'clandestined/rendezvous_hash'
 
 def my_hash_function(key)
   Digest::MD5.hexdigest(key).to_i(16)

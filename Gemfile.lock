@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    clandestiny (1.0.0a)
+    clandestined (1.0.0a)
 
 GEM
   remote: https://rubygems.org/
@@ -15,7 +15,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  clandestiny!
+  clandestined!
   rake (= 0.9.6)
   rake-compiler (= 0.8.3)
   rubydoctest (= 1.1.3)
