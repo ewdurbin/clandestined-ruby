@@ -13,9 +13,15 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib', 'ext']
   s.extensions = ['ext/murmur3_native/extconf.rb']
 
-  s.add_development_dependency 'rake', '0.9.6'
-  s.add_development_dependency 'rake-compiler', '0.8.3'
-  s.add_development_dependency 'rubydoctest', '1.1.3'
+  if RUBY_VERSION < "1.9"
+    s.add_development_dependency 'rake', '0.8.7'
+    s.add_development_dependency 'rake-compiler', '0.8.3'
+    s.add_development_dependency 'rubydoctest', '1.1.3'
+  else
+    s.add_development_dependency 'rake'
+    s.add_development_dependency 'rake-compiler'
+    s.add_development_dependency 'rubydoctest'
+  end
 
   s.has_rdoc = false
 
