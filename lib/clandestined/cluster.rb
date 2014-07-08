@@ -1,11 +1,8 @@
 
 require 'clandestined/rendezvous_hash'
-require 'murmur3'
 
 module Clandestined
   class Cluster
-
-    include Murmur3
 
     attr_reader :hash_function
     attr_reader :seed
