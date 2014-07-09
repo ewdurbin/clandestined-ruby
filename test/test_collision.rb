@@ -26,13 +26,30 @@ class CollisionHashTestCase < Test::Unit::TestCase
     end
   end
 
+  def test_monkey_patch
+    rendezvous = RendezvousHash.new()
+    assert_equal(rendezvous.hash_function.call('lol'), 4294967295)
+    assert_equal(rendezvous.hash_function.call('wat'), 4294967295)
+  end
+
   def test_rendezvous_collision
     nodes = ['c', 'b', 'a']
     rendezvous = RendezvousHash.new(nodes)
-    assert_equal(rendezvous.hash_function.call('lol'), 4294967295)
-    assert_equal(rendezvous.hash_function.call('wat'), 4294967295)
     for i in (0..1000)
       assert_equal('c', rendezvous.find_node(i))
+    end
+  end
+
+  def test_rendezvous_names
+    nodes = [1, 2, 3, 'a', 'b', 'lol.wat.com']
+    rendezvous = RendezvousHash.new(nodes)
+    for i in (0..10)
+      assert_equal('lol.wat.com', rendezvous.find_node(i))
+    end
+    nodes = [1, 'a', '0']
+    rendezvous = RendezvousHash.new(nodes)
+    for i in (0..10)
+      assert_equal('a', rendezvous.find_node(i))
     end
   end
 
