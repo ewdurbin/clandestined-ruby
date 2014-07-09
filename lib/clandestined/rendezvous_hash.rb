@@ -14,7 +14,6 @@ module Clandestined
       @seed = seed
 
       @hash_function = lambda { |key| murmur3_32(key, seed) }
-
     end
 
     def add_node(node)
@@ -30,7 +29,17 @@ module Clandestined
     end
 
     def find_node(key)
-      nodes.max {|a,b| hash_function.call("#{a}-#{key}") <=> hash_function.call("#{b}-#{key}")}
+      high_score = -1
+      winner = nil
+      nodes.each do |node|
+        score = hash_function.call("#{node}-#{key}")
+        if score > high_score
+          high_score, winner = score, node
+        elsif score == high_score
+          high_score, winner = score, [node.to_s, winner.to_s].max
+        end
+      end
+      winner
     end
 
   end
