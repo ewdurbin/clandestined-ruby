@@ -4,6 +4,8 @@
 /.vendor
 /Gemfile.lock
 
+/.ruby-version
+
 /pkg
 /tmp
 /lib/murmur3_native.bundle
