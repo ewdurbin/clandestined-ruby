@@ -14,8 +14,9 @@ changes.
 clandestined is a library for rendezvous hashing which has the goal of simple
 clients and ease of use.
 
-Currently targetting for support:
-  - Ruby 1.8.6 through Ruby 2.1.x
+Currently supported Rubies:
+  - Ruby 1.8.6 through Ruby 2.2
+  - JRuby 1.8 and 1.9
 
 [![Build Status](https://travis-ci.org/ewdurbin/clandestined-ruby.svg?branch=master)](https://travis-ci.org/ewdurbin/clandestined-ruby)
 
