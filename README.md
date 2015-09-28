@@ -114,3 +114,9 @@ see LICENSE.
 >> rendezvous.find_node('mykey')
 => "7"
 ```
+
+## contributors
+
+Thanks to the following contributors for their aid in making this project great:
+
+- [Nick Murphy](https://github.com/njm)
